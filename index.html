@@ -8,27 +8,41 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root{
-  --navy:#062B49;--blue:#0B4A7A;--blue2:#2178AD;--sky:#EAF5FC;--ice:#F7FBFE;
-  --panel:#FFFFFF;--line:#D8E3ED;--text:#1F2933;--muted:#667085;
-  --green:#2E7D32;--yellow:#F9A825;--red:#C62828;--orange:#EF6C00;--purple:#5B4B8A;
-  --shadow:0 12px 32px rgba(15,23,42,.09);
+  --primary:#0075C9;
+  --secondary:#63E6B8;
+  --primary-step-1:#004582;
+  --primary-step-2:#002454;
+  --navy:#002454;
+  --blue:#0075C9;
+  --blue2:#004582;
+  --sky:#EAF6FE;
+  --ice:#F8FCFF;
+  --panel:#FFFFFF;
+  --line:#D8E3ED;
+  --text:#101828;
+  --muted:#475467;
+  --green:#2E7D32;--yellow:#F9A825;--red:#C62828;--orange:#EF6C00;--purple:#004582;
+  --shadow:0 12px 32px rgba(0,36,84,.10);
 }
 *{box-sizing:border-box} html{scroll-behavior:smooth}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#EEF6FC 0%,#fff 38%);color:var(--text);line-height:1.45}
+body{margin:0;font-family:'Proxima Nova',Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#F7FBFE 0%,#fff 42%);color:var(--text);line-height:1.45}
 .wrapper{max-width:1480px;margin:0 auto;padding:28px}
-.hero{position:relative;overflow:hidden;background:radial-gradient(circle at 86% 18%,rgba(255,255,255,.22),transparent 24%),linear-gradient(135deg,var(--navy),var(--blue));color:#fff;padding:34px;border-radius:24px;box-shadow:0 16px 40px rgba(7,47,79,.24)}
-.brand{font-size:29px;font-weight:900;letter-spacing:.4px}.kicker{text-transform:uppercase;letter-spacing:1.8px;font-size:12px;opacity:.86;margin-top:8px}
-h1{font-size:39px;margin:8px 0 8px}.hero p{font-size:17px;max-width:940px;opacity:.96}.pill{display:inline-flex;border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:8px 12px;margin:10px 8px 0 0;background:rgba(255,255,255,.12);font-weight:700;font-size:13px}
+.brand-header{display:flex;align-items:center;justify-content:space-between;gap:18px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px 22px;margin-bottom:18px;box-shadow:var(--shadow)}
+.logo-wrap{display:flex;align-items:center;gap:16px}.medix-logo{height:64px;width:auto;max-width:310px;object-fit:contain}.brand-lockup{border-left:4px solid var(--secondary);padding-left:16px}.brand-lockup strong{display:block;color:var(--navy);font-size:16px}.brand-lockup span{display:block;color:var(--muted);font-size:13px}.brand-tagline{color:var(--secondary);font-weight:900;font-size:18px;white-space:nowrap}
+.hero{position:relative;overflow:hidden;background:radial-gradient(circle at 86% 18%,rgba(99,230,184,.22),transparent 24%),linear-gradient(135deg,var(--primary-step-2),var(--primary-step-1) 58%,var(--primary));color:#fff;padding:34px;border-radius:24px;box-shadow:0 16px 40px rgba(0,36,84,.24);border-bottom:5px solid var(--secondary)}
+.brand{font-size:29px;font-weight:900;letter-spacing:.4px}.kicker{text-transform:uppercase;letter-spacing:1.8px;font-size:12px;opacity:.92;margin-top:8px;color:var(--secondary);font-weight:900}
+h1{font-size:39px;margin:8px 0 8px;font-weight:900;letter-spacing:.2px;color:inherit}.hero p{font-size:17px;max-width:940px;opacity:.96}.pill{display:inline-flex;border:1px solid rgba(99,230,184,.55);border-radius:999px;padding:8px 12px;margin:10px 8px 0 0;background:rgba(99,230,184,.12);font-weight:800;font-size:13px;color:#fff}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow);margin-top:20px}.card h2{margin:0 0 12px;color:var(--navy);font-size:24px}.card h3{margin:0 0 9px;color:var(--navy);font-size:18px}.small{font-size:13px;color:var(--muted)}
-.hidden{display:none!important}.center{text-align:center}.intro{max-width:860px;margin:0 auto}.button-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}button{border:0;border-radius:12px;padding:12px 16px;font-weight:900;cursor:pointer}.primary{background:var(--blue);color:#fff}.secondary{background:#E8F2F8;color:var(--navy)}.ghost{background:#fff;color:var(--navy);border:1px solid var(--line)}
-.platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}.platform-card{border:1px solid var(--line);border-radius:18px;padding:18px;background:#FBFDFF;cursor:pointer;transition:.18s;min-height:132px}.platform-card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(15,23,42,.10)}.platform-card.selected{border:2px solid var(--blue2);background:#EFF8FF}.platform-card strong{display:block;font-size:19px;color:var(--navy);margin-bottom:5px}.platform-tag{display:inline-flex;font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--blue);background:#E8F2F8;padding:5px 8px;border-radius:999px;margin-bottom:8px}
+.hidden{display:none!important}.center{text-align:center}.intro{max-width:860px;margin:0 auto}.button-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}button{border:0;border-radius:12px;padding:12px 16px;font-weight:900;cursor:pointer}.primary{background:linear-gradient(135deg,var(--primary-step-1),var(--primary));color:#fff;box-shadow:0 8px 18px rgba(0,117,201,.20)}.secondary{background:#EAF6FE;color:var(--navy);border:1px solid #C9E7FA}.ghost{background:#fff;color:var(--navy);border:1px solid var(--line)}
+.platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}.platform-card{border:1px solid var(--line);border-radius:18px;padding:18px;background:#FBFDFF;cursor:pointer;transition:.18s;min-height:132px}.platform-card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(15,23,42,.10)}.platform-card.selected{border:2px solid var(--primary);background:#EFF8FF;box-shadow:0 10px 28px rgba(0,117,201,.16)}.platform-card strong{display:block;font-size:19px;color:var(--navy);margin-bottom:5px}.platform-tag{display:inline-flex;font-size:11px;font-weight:900;letter-spacing:.5px;text-transform:uppercase;color:var(--primary-step-1);background:#EAF6FE;padding:5px 8px;border-radius:999px;margin-bottom:8px;border:1px solid #C9E7FA}
 .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:22px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.profile-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}input[type=text],input[type=email],input[type=tel],input[type=number],select{width:100%;padding:11px;border:1px solid var(--line);border-radius:11px;font-size:14px;background:#fff}.required-star{color:var(--red);font-weight:900}.field-error{border-color:var(--red)!important;background:#FFF7F7!important}.error-message{display:none;color:var(--red);font-size:12px;font-weight:800;margin-top:5px}.error-message.show{display:block}.validation-banner{display:none;background:#FFF7F7;border:1px solid #F3B3B3;color:#8A1F1F;border-radius:14px;padding:12px;margin-top:12px;font-weight:800}.validation-banner.show{display:block}.success-banner{display:none;background:#F1FAF2;border:1px solid #BFE5C2;color:#1F6B25;border-radius:14px;padding:12px;margin-top:12px;font-weight:800}.success-banner.show{display:block}label{cursor:pointer}.stepbar{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.stepbar span{padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:#fff;font-weight:800;font-size:13px;color:var(--muted)}.stepbar .active{background:var(--blue);color:#fff;border-color:var(--blue)}
 .vendor-banner{display:flex;justify-content:space-between;gap:16px;align-items:center;background:#F7FBFE;border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:16px}.vendor-banner h2{margin:0;color:var(--navy)}
 .module-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 14px}.module-toolbar button,.mini-button{padding:8px 10px;border-radius:10px;font-size:12px}.module-area{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.module-group{border:1px solid var(--line);border-radius:16px;padding:15px;background:#FBFDFF}.module-group h3{display:flex;justify-content:space-between;gap:8px;align-items:center}.module-group-actions{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 4px}.module-list{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 10px;margin-top:8px}.module-list label,.ecosystem label,.questions label{display:flex;align-items:flex-start;gap:8px;padding:5px 0}.module-list input,.ecosystem input,.questions input{margin-top:3px}.module-count{margin-top:12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#F7FBFE;font-weight:800;color:var(--navy);display:inline-flex;gap:8px;align-items:center}
 .ecosystem{display:grid;grid-template-columns:repeat(4,1fr);gap:6px 14px}.questions{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px;margin-top:8px}.section{border-top:1px solid var(--line);padding:18px 0}.section:first-of-type{border-top:none}.section-header{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.badge{display:inline-flex;align-items:center;justify-content:center;min-width:66px;height:32px;border-radius:999px;font-weight:900;color:white;white-space:nowrap}.green{background:var(--green)}.yellow{background:var(--yellow);color:#1f2933}.red{background:var(--red)}.orange{background:var(--orange)}.purple{background:var(--purple)}
-.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.kpi{border:1px solid var(--line);border-radius:16px;padding:14px;background:#FBFDFF}.kpi .num{font-size:33px;font-weight:900;color:var(--blue);line-height:1}.kpi .label{font-size:12px;color:var(--muted);margin-top:6px}.grade{font-size:56px!important}.score-ring{display:flex;align-items:center;gap:16px}.score-circle{width:118px;height:118px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:conic-gradient(var(--blue2) calc(var(--score)*1%),#E5E7EB 0);position:relative}.score-circle:before{content:"";position:absolute;width:88px;height:88px;background:#fff;border-radius:50%}.score-circle span{position:relative;font-size:32px;font-weight:900;color:var(--navy)}
-.metric{margin:12px 0}.metric-row{display:flex;justify-content:space-between;font-size:13px;font-weight:800;color:var(--navy)}.track{height:11px;background:#E5E7EB;border-radius:999px;overflow:hidden;margin-top:6px}.track span{display:block;height:100%;background:var(--blue2);width:0}.chart-wrap{height:360px}.heat-table{width:100%;border-collapse:collapse}.heat-table th,.heat-table td{border-bottom:1px solid var(--line);padding:10px;text-align:left;font-size:14px}.heat-table th{background:#F7FBFE;color:var(--navy)}
-.findings li,.impact li,.benchmark li{margin-bottom:9px}.callout{background:#F7FBFE;border-left:5px solid var(--blue);padding:13px;border-radius:11px;margin-top:12px}.service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.service{border:1px solid var(--line);border-radius:15px;padding:13px;background:#FBFDFF}.service strong{color:var(--navy)}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.kpi{border:1px solid var(--line);border-radius:16px;padding:14px;background:#FBFDFF}.kpi .num{font-size:33px;font-weight:900;color:var(--blue);line-height:1}.kpi .label{font-size:12px;color:var(--muted);margin-top:6px}.grade{font-size:56px!important}.score-ring{display:flex;align-items:center;gap:16px}.score-circle{width:118px;height:118px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:conic-gradient(var(--primary) calc(var(--score)*1%),#E5E7EB 0);position:relative}.score-circle:before{content:"";position:absolute;width:88px;height:88px;background:#fff;border-radius:50%}.score-circle span{position:relative;font-size:32px;font-weight:900;color:var(--navy)}
+.metric{margin:12px 0}.metric-row{display:flex;justify-content:space-between;font-size:13px;font-weight:800;color:var(--navy)}.track{height:11px;background:#E5E7EB;border-radius:999px;overflow:hidden;margin-top:6px}.track span{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));width:0}.chart-wrap{height:360px}.heat-table{width:100%;border-collapse:collapse}.heat-table th,.heat-table td{border-bottom:1px solid var(--line);padding:10px;text-align:left;font-size:14px}.heat-table th{background:#F7FBFE;color:var(--navy)}
+.findings li,.impact li,.benchmark li{margin-bottom:9px}.callout{background:#F8FCFF;border-left:5px solid var(--secondary);padding:13px;border-radius:11px;margin-top:12px}.service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.service{border:1px solid var(--line);border-radius:15px;padding:13px;background:#FBFDFF}.service strong{color:var(--navy)}
+@media(max-width:900px){.brand-header{align-items:flex-start;flex-direction:column}.brand-tagline{white-space:normal}.medix-logo{height:52px}.brand-lockup{border-left:0;border-top:4px solid var(--secondary);padding-left:0;padding-top:12px}}
 @media(max-width:1120px){.grid,.platform-grid,.module-area,.grid3,.grid4,.service-grid{grid-template-columns:1fr}.profile-grid,.ecosystem,.kpi-grid{grid-template-columns:1fr 1fr}.questions{grid-template-columns:1fr}.module-list{grid-template-columns:1fr}}
 @media(max-width:720px){.wrapper{padding:14px}h1{font-size:30px}.profile-grid,.ecosystem,.kpi-grid{grid-template-columns:1fr}.hero{padding:24px}.score-ring{align-items:flex-start;flex-direction:column}}
 @media print{body{background:#fff}.wrapper{max-width:none;padding:10px}.hero,.card{box-shadow:none}.button-row,.platform-grid,#introCard{display:none!important}.grid{grid-template-columns:1fr}.card{break-inside:avoid}.section{break-inside:avoid}.questions{grid-template-columns:1fr 1fr}}
@@ -36,9 +50,19 @@ h1{font-size:39px;margin:8px 0 8px}.hero p{font-size:17px;max-width:940px;opacit
 </head>
 <body>
 <div class="wrapper">
+  <div class="brand-header">
+    <div class="logo-wrap">
+      <img src="medix-technology-logo.png" alt="Medix Technology" class="medix-logo">
+      <div class="brand-lockup">
+        <strong>ERP Transformation Advisor™</strong>
+        <span>Healthcare-focused assessment. Data-driven insights. Smarter ERP decisions.</span>
+      </div>
+    </div>
+    <div class="brand-tagline">People. Technology. Solutions.</div>
+  </div>
+
   <div class="hero">
-    <div class="brand">Medix</div>
-    <div class="kicker">ERP Transformation Advisor™</div>
+    <div class="kicker">Healthcare ERP Advisory Portal</div>
     <h1>Medix ERP Transformation Advisor™</h1>
     <p>A vendor-aware consulting-style readiness assessment for healthcare organizations preparing for ERP evaluation, implementation, stabilization, optimization, or legacy platform replacement.</p>
     <span class="pill">Vendor-specific module language</span><span class="pill">Healthcare integration scoring</span><span class="pill">Executive opportunity report</span>
