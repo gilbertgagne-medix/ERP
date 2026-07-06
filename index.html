@@ -1,0 +1,734 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Medix Healthcare ERP Readiness Assessment V3</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root{
+  --navy:#072F4F;
+  --blue:#0B4A7A;
+  --blue2:#2178AD;
+  --light:#F3F8FC;
+  --panel:#FFFFFF;
+  --line:#D8E3ED;
+  --text:#1F2933;
+  --muted:#667085;
+  --green:#2E7D32;
+  --yellow:#F9A825;
+  --red:#C62828;
+  --orange:#EF6C00;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:linear-gradient(180deg,#EEF6FC 0%,#FFFFFF 42%);
+  color:var(--text);
+  font-family:Arial, Helvetica, sans-serif;
+  line-height:1.45;
+}
+.wrapper{max-width:1420px;margin:0 auto;padding:28px}
+.hero{
+  background:
+    radial-gradient(circle at 85% 20%,rgba(255,255,255,.18),transparent 24%),
+    linear-gradient(135deg,var(--navy),var(--blue));
+  color:#fff;
+  padding:34px;
+  border-radius:22px;
+  box-shadow:0 12px 32px rgba(7,47,79,.22);
+}
+.brand{font-size:28px;font-weight:800;letter-spacing:.4px}
+.kicker{text-transform:uppercase;letter-spacing:1.7px;font-size:12px;opacity:.85;margin-top:8px}
+h1{font-size:38px;margin:8px 0 8px}
+.hero p{font-size:17px;max-width:920px;opacity:.96}
+.grid{display:grid;grid-template-columns:1.08fr .92fr;gap:22px;margin-top:22px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:22px;
+  box-shadow:0 6px 20px rgba(15,23,42,.06);
+}
+.card h2{margin:0 0 12px;color:var(--navy);font-size:23px}
+.card h3{margin:0 0 8px;color:var(--navy);font-size:18px}
+.small{font-size:13px;color:var(--muted)}
+.profile-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+input[type=text],select{
+  width:100%;
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  font-size:14px;
+}
+.module-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px 12px;margin-top:8px}
+.module-grid label,.question label{cursor:pointer}
+.section{
+  border-top:1px solid var(--line);
+  padding:18px 0;
+}
+.section:first-of-type{border-top:none}
+.section-header{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  align-items:flex-start;
+}
+.weight{font-size:12px;color:var(--muted)}
+.questions{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px;margin-top:8px}
+.questions label{display:flex;gap:8px;align-items:flex-start;padding:5px 0}
+.questions input{margin-top:3px}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:64px;
+  height:32px;
+  border-radius:999px;
+  font-weight:800;
+  color:white;
+  white-space:nowrap;
+}
+.green{background:var(--green)}
+.yellow{background:var(--yellow);color:#1f2933}
+.red{background:var(--red)}
+.orange{background:var(--orange)}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.kpi{
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:14px;
+  background:#FBFDFF;
+}
+.kpi .num{font-size:34px;font-weight:900;color:var(--blue);line-height:1}
+.kpi .label{font-size:12px;color:var(--muted);margin-top:6px}
+.chart-wrap{height:380px}
+.heat-table{width:100%;border-collapse:collapse}
+.heat-table th,.heat-table td{border-bottom:1px solid var(--line);padding:10px;text-align:left;font-size:14px}
+.heat-table th{color:var(--navy);background:#F7FBFE}
+.bar{
+  height:10px;
+  border-radius:999px;
+  background:#E5E7EB;
+  overflow:hidden;
+  min-width:110px;
+}
+.bar span{display:block;height:100%;background:var(--blue2)}
+.risk-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.risk-box{border:1px solid var(--line);border-radius:14px;padding:13px;background:#FBFDFF}
+.risk-box strong{display:block;margin-bottom:8px}
+.recs li,.impact li,.benchmark li{margin-bottom:8px}
+.phase{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+  margin-top:10px;
+}
+.phase span{
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:#fff;
+  font-size:13px;
+  font-weight:700;
+}
+.phase .active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.button-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+button{
+  border:0;
+  border-radius:11px;
+  padding:12px 16px;
+  font-weight:800;
+  cursor:pointer;
+}
+.primary{background:var(--blue);color:white}
+.secondary{background:#E8F2F8;color:var(--navy)}
+.footer-map{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.footer-map div{border:1px solid var(--line);border-radius:14px;padding:14px;background:#FBFDFF}
+.cover-note{
+  background:#F7FBFE;
+  border-left:5px solid var(--blue);
+  padding:13px;
+  border-radius:10px;
+  margin-top:12px;
+}
+@media(max-width:1050px){
+  .grid,.grid3,.footer-map{grid-template-columns:1fr}
+  .questions,.profile-grid,.module-grid,.kpi-grid,.risk-grid{grid-template-columns:1fr}
+}
+@media print{
+  body{background:white}
+  .wrapper{max-width:none;padding:10px}
+  .hero,.card{box-shadow:none}
+  .button-row{display:none}
+  .grid{grid-template-columns:1fr}
+  .questions{grid-template-columns:1fr 1fr}
+  .section{break-inside:avoid}
+  .card{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="hero">
+    <div class="brand">Medix</div>
+    <div class="kicker">Healthcare ERP Advisory Portal</div>
+    <h1>Healthcare ERP Readiness Assessment</h1>
+    <p>
+      A consulting-style readiness assessment for healthcare organizations preparing for ERP evaluation, Workday implementation, legacy system replacement, stabilization, or optimization.
+    </p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Organization & Project Profile</h2>
+      <div class="profile-grid">
+        <label>Organization Name<br><input id="org" type="text" placeholder="Health System / Organization"></label>
+        <label>Primary ERP Platform<br>
+          <select id="erp" onchange="calculate()">
+            <option>Workday</option>
+            <option>Oracle Cloud ERP</option>
+            <option>Infor CloudSuite</option>
+            <option>UKG</option>
+            <option>Lawson / Infor Replacement</option>
+            <option>Other / Evaluating Options</option>
+          </select>
+        </label>
+        <label>Project Stage<br>
+          <select id="stage" onchange="calculate()">
+            <option>Discovery</option>
+            <option>Business Case</option>
+            <option>Vendor Selection</option>
+            <option>Implementation Planning</option>
+            <option>Implementation</option>
+            <option>Testing</option>
+            <option>Go-Live / Hypercare</option>
+            <option>Optimization</option>
+          </select>
+        </label>
+        <label>Target Timeline<br>
+          <select id="timeline" onchange="calculate()">
+            <option>Not Defined</option>
+            <option>0–6 Months</option>
+            <option>6–12 Months</option>
+            <option>12–18 Months</option>
+            <option>18–30 Months</option>
+            <option>30+ Months</option>
+          </select>
+        </label>
+      </div>
+
+      <h3 style="margin-top:18px">Applicable Modules / Scope</h3>
+      <div class="module-grid" id="modules"></div>
+    </div>
+
+    <div class="card">
+      <h2>Executive Dashboard</h2>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="num"><span id="score">0</span></div><div class="label">Weighted Readiness /100</div></div>
+        <div class="kpi"><div class="num"><span id="prob">0%</span></div><div class="label">Projected Success Probability</div></div>
+        <div class="kpi"><div class="num"><span id="risk">High</span></div><div class="label">Overall Risk</div></div>
+        <div class="kpi"><div class="num"><span id="budget">Low</span></div><div class="label">Budget Confidence</div></div>
+        <div class="kpi"><div class="num"><span id="time">Low</span></div><div class="label">Timeline Confidence</div></div>
+        <div class="kpi"><div class="num"><span id="staff">High</span></div><div class="label">Staffing Exposure</div></div>
+      </div>
+      <div class="cover-note" id="execSummary"></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Readiness Checklist</h2>
+      <p class="small">Check each item your organization has already addressed. Each workstream is weighted based on its impact to healthcare ERP implementation risk.</p>
+      <div id="checklist"></div>
+      <div class="button-row">
+        <button class="primary" onclick="calculate()">Update Assessment</button>
+        <button class="secondary" onclick="window.print()">Export Executive PDF</button>
+        <button class="secondary" onclick="resetAll()">Reset</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <h2>Strengths & Gaps Radar</h2>
+        <div class="chart-wrap"><canvas id="radar"></canvas></div>
+      </div>
+      <div class="card">
+        <h2>ERP Transformation Maturity Curve</h2>
+        <div class="phase" id="journey"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Executive Heat Map & Benchmark Gap Analysis</h2>
+    <table class="heat-table">
+      <thead>
+        <tr>
+          <th>Workstream</th>
+          <th>Your Score</th>
+          <th>Benchmark</th>
+          <th>Gap</th>
+          <th>Status</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody id="heat"></tbody>
+    </table>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Estimated Project Risks</h2>
+      <div class="risk-grid" id="riskGrid"></div>
+      <ul class="impact" id="riskDetails"></ul>
+    </div>
+
+    <div class="card">
+      <h2>Estimated Financial & Operational Impact</h2>
+      <ul class="impact" id="impact"></ul>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>AI-Generated Executive Recommendations</h2>
+      <ul class="recs" id="recommendations"></ul>
+    </div>
+
+    <div class="card">
+      <h2>Healthcare ERP Benchmarks</h2>
+      <ul class="benchmark">
+        <li><strong>Implementation duration:</strong> Many healthcare ERP transformations require 18–30 months depending on scope, modules, integrations, and operating model complexity.</li>
+        <li><strong>SME allocation:</strong> Functional SMEs often need 40–60% allocation during design, testing, training, and go-live readiness.</li>
+        <li><strong>Hypercare:</strong> Organizations should plan for 60–90 days of focused stabilization support after go-live.</li>
+        <li><strong>Integrations:</strong> Large healthcare ERP programs may involve dozens to 100+ integrations across finance, HR, supply chain, identity, revenue cycle, and clinical systems.</li>
+        <li><strong>Change management:</strong> Effective adoption planning often begins 6–9 months before go-live, not during training.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Where Medix Adds Value Across the ERP Lifecycle</h2>
+    <div class="footer-map">
+      <div>
+        <h3>Planning</h3>
+        <p class="small">ERP readiness assessments, TCO validation, implementation planning, staffing strategy, PMO advisory, partner strategy, and project governance.</p>
+      </div>
+      <div>
+        <h3>Implementation</h3>
+        <p class="small">ERP consultants, project managers, business analysts, trainers, data conversion support, testing resources, reporting support, and interim backfill.</p>
+      </div>
+      <div>
+        <h3>Stabilization & Optimization</h3>
+        <p class="small">Hypercare, managed services, MedixFlex, optimization resources, release support, reporting improvements, and long-term staffing strategies.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const moduleList=["HCM","Finance","Supply Chain","Payroll","Recruiting","Learning","Adaptive Planning","Prism Analytics","Extend","Expenses","Procurement","Grants"];
+const modules=document.getElementById("modules");
+moduleList.forEach((m,i)=>modules.innerHTML+=`<label><input type="checkbox" id="module${i}" onchange="calculate()"> ${m}</label>`);
+
+const sections=[
+{
+ name:"Business Case & Executive Alignment", short:"Business Case", weight:9,
+ benchmark:4,
+ questions:[
+  "Executive sponsor has been identified and is actively engaged.",
+  "Strategic objectives and business outcomes are documented.",
+  "ROI, value realization, and success metrics are defined.",
+  "Finance, HR, supply chain, IT, and operations are aligned on project goals.",
+  "Board or executive leadership understands the scope, timeline, and investment."
+ ],
+ rec:"Clarify the business case, executive sponsorship, and measurable outcomes before committing to timeline or budget."
+},
+{
+ name:"Financial Planning & Total Cost of Ownership", short:"TCO", weight:10,
+ benchmark:4,
+ questions:[
+  "Software, implementation, advisory, and staffing costs are included in the TCO.",
+  "Internal labor and SME allocation costs are included.",
+  "Backfill and interim support costs are included.",
+  "Training, change management, testing, and post-go-live support are budgeted.",
+  "Contingency and legacy system overlap costs are included."
+ ],
+ rec:"Expand the TCO model to include staffing, backfill, training, integrations, legacy overlap, contingency, and post-go-live support."
+},
+{
+ name:"Governance & Decision Making", short:"Governance", weight:9,
+ benchmark:4,
+ questions:[
+  "Executive steering committee is established.",
+  "PMO structure and workstream ownership are defined.",
+  "Decision rights and escalation paths are documented.",
+  "Project governance cadence is agreed upon.",
+  "Scope control and change request processes are defined."
+ ],
+ rec:"Establish clear governance, escalation, and decision-making structures to prevent scope creep and project delays."
+},
+{
+ name:"Staffing & Resource Planning", short:"Staffing", weight:10,
+ benchmark:4,
+ questions:[
+  "Core project team and workstream leads are identified.",
+  "Functional SMEs have defined allocation expectations.",
+  "Backfill strategy exists for critical operational roles.",
+  "Contractor, consultant, and permanent staffing needs are forecasted.",
+  "Skills gaps have been assessed across IT, HR, finance, and supply chain."
+ ],
+ rec:"Develop a workforce plan that includes SME allocation, backfill, contractors, consultants, recruiting timelines, and long-term support needs."
+},
+{
+ name:"Implementation Partner Strategy", short:"Partners", weight:7,
+ benchmark:4,
+ questions:[
+  "Implementation partner selection criteria are documented.",
+  "Advisory, implementation, staffing, and managed services responsibilities are separated.",
+  "Vendor governance model is defined.",
+  "Partner accountability and deliverables are documented.",
+  "Internal team understands where external support is required."
+ ],
+ rec:"Define partner roles early so the organization does not overpay, duplicate work, or leave gaps between implementation, advisory, and staffing support."
+},
+{
+ name:"Data Migration & Reporting", short:"Data", weight:9,
+ benchmark:4,
+ questions:[
+  "Data owners and data governance roles are assigned.",
+  "Data cleansing plan is underway.",
+  "Historical data and archive strategy are defined.",
+  "Reporting and analytics strategy is documented.",
+  "Data conversion testing and reconciliation approach is defined."
+ ],
+ rec:"Begin data governance, cleansing, conversion testing, reconciliation, reporting, and archive planning as early as possible."
+},
+{
+ name:"Organizational Change Management", short:"Change", weight:8,
+ benchmark:4,
+ questions:[
+  "Change management strategy is documented.",
+  "Stakeholder groups and impacted departments are mapped.",
+  "Communication plan and executive messaging are drafted.",
+  "Change champions or super users are identified.",
+  "Adoption KPIs and resistance management plans are defined."
+ ],
+ rec:"Invest in communication, stakeholder engagement, change champions, adoption KPIs, and resistance management well before go-live."
+},
+{
+ name:"Training & Organizational Readiness", short:"Training", weight:7,
+ benchmark:4,
+ questions:[
+  "Role-based training curriculum is defined.",
+  "Training environment and materials are planned.",
+  "Super users and departmental champions are identified.",
+  "Go-live readiness criteria are documented.",
+  "Training completion, proficiency, and adoption tracking are planned."
+ ],
+ rec:"Treat training as an adoption strategy, not a checkbox. Define curriculum, environments, super users, readiness criteria, and proficiency tracking."
+},
+{
+ name:"Technical Readiness & Integrations", short:"Technical", weight:8,
+ benchmark:4,
+ questions:[
+  "Integration inventory is complete or underway.",
+  "Security and role-based access model is being defined.",
+  "Identity management and provisioning impacts are understood.",
+  "Testing strategy includes integrations and downstream workflows.",
+  "Infrastructure, disaster recovery, and support processes are reviewed."
+ ],
+ rec:"Inventory integrations, security, identity management, infrastructure, testing, disaster recovery, and downstream operational impacts early."
+},
+{
+ name:"Legacy System Retirement", short:"Legacy", weight:6,
+ benchmark:4,
+ questions:[
+  "Legacy systems and contracts are inventoried.",
+  "Decommissioning criteria are defined.",
+  "Archive and retention strategy is documented.",
+  "License reduction and savings opportunities are estimated.",
+  "Support model during system overlap is planned."
+ ],
+ rec:"Create a legacy system retirement roadmap that includes archive access, contracts, license savings, support overlap, and decommission timelines."
+},
+{
+ name:"Stabilization & Optimization", short:"Optimization", weight:8,
+ benchmark:4,
+ questions:[
+  "Hypercare model is defined.",
+  "Post-go-live support roles and escalation paths are assigned.",
+  "Optimization roadmap is documented.",
+  "Release management and continuous improvement processes are planned.",
+  "KPIs for value realization and operational performance are defined."
+ ],
+ rec:"Plan for stabilization before go-live, including hypercare, escalation, optimization roadmap, release management, and value tracking."
+},
+{
+ name:"AI & Automation Readiness", short:"AI", weight:4,
+ benchmark:3,
+ questions:[
+  "AI, automation, or analytics goals are connected to ERP strategy.",
+  "Process automation opportunities are identified.",
+  "Self-service reporting and dashboard needs are documented.",
+  "Data quality requirements for automation are understood.",
+  "Governance exists for AI, analytics, and automation use cases."
+ ],
+ rec:"Connect ERP planning to AI, automation, analytics, dashboards, and data quality so modernization creates long-term value."
+},
+{
+ name:"Healthcare-Specific ERP Readiness", short:"Healthcare", weight:5,
+ benchmark:4,
+ questions:[
+  "Epic or EHR integration requirements are understood.",
+  "Healthcare supply chain and clinical finance workflows are mapped.",
+  "Payroll, labor management, and workforce complexity are documented.",
+  "Revenue cycle, grants, physician compensation, or compliance impacts are reviewed.",
+  "Healthcare-specific security, privacy, and audit requirements are understood."
+ ],
+ rec:"Validate healthcare-specific requirements around Epic/EHR integration, supply chain, clinical finance, payroll, grants, physician compensation, compliance, and audit needs."
+}
+];
+
+let radarChart;
+
+function buildChecklist(){
+ const el=document.getElementById("checklist");
+ el.innerHTML="";
+ sections.forEach((s,i)=>{
+  let q="";
+  s.questions.forEach((item,j)=>{
+   q += `<label><input type="checkbox" id="q${i}_${j}" onchange="calculate()"> <span>${item}</span></label>`;
+  });
+  el.innerHTML += `
+   <div class="section">
+    <div class="section-header">
+      <div>
+        <h3>${i+1}. ${s.name}</h3>
+        <div class="small">Weight: ${s.weight}% | Benchmark: ${s.benchmark}/5</div>
+      </div>
+      <span id="badge${i}" class="badge red">0/5</span>
+    </div>
+    <div class="questions">${q}</div>
+   </div>`;
+ });
+}
+
+function scoreClass(score, benchmark){
+ if(score>=benchmark) return "green";
+ if(score>=3) return "yellow";
+ return "red";
+}
+function statusLabel(score, benchmark){
+ if(score>=benchmark) return "Green";
+ if(score>=3) return "Yellow";
+ return "Red";
+}
+function riskLevel(value){
+ if(value>=75) return ["Low","green"];
+ if(value>=55) return ["Medium","yellow"];
+ if(value>=35) return ["Elevated","orange"];
+ return ["High","red"];
+}
+function confidence(value){
+ if(value>=75) return "High";
+ if(value>=55) return "Medium";
+ return "Low";
+}
+function inverseExposure(value){
+ if(value>=75) return "Low";
+ if(value>=55) return "Medium";
+ return "High";
+}
+function checkedCount(i){
+ let c=0;
+ for(let j=0;j<sections[i].questions.length;j++){
+  if(document.getElementById(`q${i}_${j}`).checked) c++;
+ }
+ return c;
+}
+function getModuleCount(){
+ let c=0;
+ moduleList.forEach((m,i)=>{if(document.getElementById(`module${i}`).checked)c++;});
+ return c;
+}
+function calculate(){
+ const raw=[];
+ let weighted=0;
+ sections.forEach((s,i)=>{
+  const c=checkedCount(i);
+  raw.push(c);
+  weighted += (c/5)*s.weight;
+  const b=document.getElementById("badge"+i);
+  b.innerText=`${c}/5`;
+  b.className="badge "+scoreClass(c,s.benchmark);
+ });
+ const score=Math.round(weighted);
+ const modules=getModuleCount();
+ const complexityPenalty = modules>=7 ? 6 : modules>=4 ? 3 : 0;
+ const adjusted=Math.max(0,score-complexityPenalty);
+ const prob=Math.min(95,Math.max(18,Math.round(adjusted*.85+12)));
+ const [riskText,riskCls]=riskLevel(adjusted);
+ document.getElementById("score").innerText=score;
+ document.getElementById("prob").innerText=prob+"%";
+ document.getElementById("risk").innerText=riskText;
+ document.getElementById("risk").style.color=riskCls==="green"?"#2E7D32":riskCls==="yellow"?"#F9A825":riskCls==="orange"?"#EF6C00":"#C62828";
+ document.getElementById("budget").innerText=confidence((raw[1]+raw[9]+raw[10])/15*100);
+ document.getElementById("time").innerText=confidence((raw[2]+raw[3]+raw[5]+raw[6]+raw[8])/25*100);
+ document.getElementById("staff").innerText=inverseExposure((raw[3]+raw[6]+raw[7]+raw[10])/20*100);
+ renderSummary(score,prob,riskText,modules);
+ renderRadar(raw);
+ renderJourney(score);
+ renderHeat(raw);
+ renderRisks(raw,score,modules);
+ renderImpact(raw,modules);
+ renderRecommendations(raw,score,modules);
+}
+
+function renderSummary(score,prob,risk,modules){
+ const org=document.getElementById("org").value || "This organization";
+ const erp=document.getElementById("erp").value;
+ const stage=document.getElementById("stage").value;
+ let level="Initial Assessment";
+ if(score>=80) level="Implementation Ready";
+ else if(score>=65) level="Strong Readiness";
+ else if(score>=50) level="Moderate Readiness";
+ else if(score>=30) level="Early Planning";
+ document.getElementById("execSummary").innerHTML =
+ `<strong>${level}:</strong> ${org} is currently in the <strong>${stage}</strong> stage for <strong>${erp}</strong>. 
+ The weighted readiness score is <strong>${score}/100</strong>, with an estimated success probability of <strong>${prob}%</strong> and an overall risk rating of <strong>${risk}</strong>. 
+ ${modules>0 ? "Selected module scope includes "+modules+" areas, which should be reflected in staffing, testing, training, integration, and post-go-live planning." : "Module scope has not been selected yet; defining scope will improve planning accuracy."}`;
+}
+
+function renderRadar(raw){
+ const ctx=document.getElementById("radar");
+ if(radarChart) radarChart.destroy();
+ radarChart=new Chart(ctx,{
+  type:"radar",
+  data:{
+   labels:sections.map(s=>s.short),
+   datasets:[
+    {label:"Your Readiness",data:raw,fill:true,borderWidth:2,pointRadius:4},
+    {label:"Benchmark",data:sections.map(s=>s.benchmark),fill:false,borderWidth:1,pointRadius:2}
+   ]
+  },
+  options:{
+   responsive:true,
+   maintainAspectRatio:false,
+   scales:{r:{min:0,max:5,ticks:{stepSize:1}}},
+   plugins:{legend:{position:"bottom"}}
+  }
+ });
+}
+
+function renderJourney(score){
+ const stages=["Discovery","Planning","Business Case","Vendor Selection","Implementation","Testing","Go-Live","Optimization"];
+ let idx=0;
+ if(score>=20) idx=1;
+ if(score>=35) idx=2;
+ if(score>=50) idx=3;
+ if(score>=65) idx=4;
+ if(score>=75) idx=5;
+ if(score>=85) idx=6;
+ if(score>=92) idx=7;
+ document.getElementById("journey").innerHTML=stages.map((s,i)=>`<span class="${i===idx?'active':''}">${s}</span>`).join(" ");
+}
+
+function renderHeat(raw){
+ const el=document.getElementById("heat");
+ el.innerHTML="";
+ sections.forEach((s,i)=>{
+  const gap=Math.max(0,s.benchmark-raw[i]);
+  const cls=scoreClass(raw[i],s.benchmark);
+  const priority = gap>=3 ? "Critical" : gap===2 ? "High" : gap===1 ? "Medium" : "Maintain";
+  el.innerHTML += `
+   <tr>
+    <td><strong>${s.name}</strong><br><span class="small">Weight: ${s.weight}%</span></td>
+    <td>${raw[i]}/5<br><div class="bar"><span style="width:${raw[i]*20}%"></span></div></td>
+    <td>${s.benchmark}/5</td>
+    <td>${gap}</td>
+    <td><span class="badge ${cls}">${statusLabel(raw[i],s.benchmark)}</span></td>
+    <td>${priority}</td>
+   </tr>`;
+ });
+}
+
+function renderRisks(raw,score,modules){
+ const riskInputs=[
+  {name:"Timeline", val:(raw[2]+raw[3]+raw[5]+raw[6]+raw[8]+raw[10])/30*100, msg:"Timeline risk increases when governance, staffing, data, change management, technical readiness, or stabilization planning are immature."},
+  {name:"Budget", val:(raw[1]+raw[3]+raw[4]+raw[9]+raw[10])/25*100, msg:"Budget risk increases when TCO, staffing, partner strategy, legacy retirement, or post-go-live support are underdeveloped."},
+  {name:"Staffing", val:(raw[3]+raw[6]+raw[7]+raw[10])/20*100, msg:"Staffing risk increases when SME allocation, backfill, training, change management, and hypercare planning are incomplete."},
+  {name:"Data", val:(raw[5]+raw[8]+raw[12])/15*100, msg:"Data risk increases when conversion, reporting, integrations, EHR workflows, security, and healthcare-specific requirements are not defined."}
+ ];
+ const grid=document.getElementById("riskGrid");
+ const details=document.getElementById("riskDetails");
+ grid.innerHTML="";
+ details.innerHTML="";
+ riskInputs.forEach(r=>{
+  const [lvl,cls]=riskLevel(r.val);
+  grid.innerHTML += `<div class="risk-box"><strong>${r.name}</strong><span class="badge ${cls}">${lvl}</span><div class="small" style="margin-top:8px">${Math.round(r.val)}% confidence</div></div>`;
+  if(lvl!=="Low") details.innerHTML += `<li><strong>${r.name}:</strong> ${r.msg}</li>`;
+ });
+ if(modules>=7) details.innerHTML += `<li><strong>Scope Complexity:</strong> The selected module scope is broad, increasing demand for integration, testing, training, reporting, and post-go-live support.</li>`;
+ if(details.innerHTML==="") details.innerHTML="<li><strong>Overall:</strong> Current risk profile appears manageable. Maintain focus on governance, validation, staffing, and stabilization.</li>";
+}
+
+function renderImpact(raw,modules){
+ const el=document.getElementById("impact");
+ let items=[];
+ if(raw[1]<4) items.push("<li><strong>Budget Exposure:</strong> Incomplete TCO can lead to unplanned costs for backfill, training, integrations, partner support, and post-go-live stabilization.</li>");
+ if(raw[3]<4) items.push("<li><strong>Staffing Exposure:</strong> Limited SME allocation or backfill planning may force operational teams to absorb project work while maintaining daily responsibilities.</li>");
+ if(raw[5]<4) items.push("<li><strong>Data Exposure:</strong> Delayed data migration and reporting planning can create rework during testing and increase cutover risk.</li>");
+ if(raw[6]<4) items.push("<li><strong>Adoption Exposure:</strong> Weak change management can reduce user adoption and increase support volume after go-live.</li>");
+ if(raw[9]<4) items.push("<li><strong>Legacy Cost Exposure:</strong> Without a decommissioning plan, legacy systems may continue generating licensing, support, and infrastructure costs after go-live.</li>");
+ if(raw[10]<4) items.push("<li><strong>Stabilization Exposure:</strong> Underplanned hypercare can delay value realization and increase operational disruption.</li>");
+ if(raw[11]<3) items.push("<li><strong>Automation Opportunity:</strong> AI, automation, and analytics value may be delayed if data quality and governance are not addressed during ERP planning.</li>");
+ if(modules>=7) items.push("<li><strong>Scope Exposure:</strong> A broad module footprint may require additional PMO, testing, training, integration, and reporting support.</li>");
+ el.innerHTML=items.join("") || "<li>No major financial or operational exposure areas were identified based on the current responses.</li>";
+}
+
+function renderRecommendations(raw,score,modules){
+ const el=document.getElementById("recommendations");
+ let recs=[];
+ sections.forEach((s,i)=>{
+  if(raw[i]<s.benchmark){
+   recs.push(`<li><strong>${s.name}:</strong> ${s.rec} <span class="small">(Current: ${raw[i]}/5 | Benchmark: ${s.benchmark}/5)</span></li>`);
+  }
+ });
+ if(raw[2]<4 && raw[3]<4){
+  recs.unshift("<li><strong>Combined Risk Finding:</strong> Governance and Staffing are both below benchmark. Organizations in this position often experience design delays because decision-making and SME capacity are not aligned early enough.</li>");
+ }
+ if(raw[1]<4 && raw[9]<4){
+  recs.unshift("<li><strong>Cost Control Finding:</strong> TCO and Legacy Retirement are both below benchmark. Consider validating the full cost model before finalizing budget, timeline, or implementation partner commitments.</li>");
+ }
+ if(raw[5]<4 && raw[8]<4 && raw[12]<4){
+  recs.unshift("<li><strong>Healthcare Integration Finding:</strong> Data, Technical Readiness, and Healthcare-Specific Readiness are below benchmark. Prioritize EHR/ERP integration, identity management, reporting, and downstream workflow planning.</li>");
+ }
+ if(modules>=7){
+  recs.unshift("<li><strong>Scope Finding:</strong> Your selected module scope is broad. Consider a formal staffing and testing model to prevent overloading internal SMEs and delaying readiness milestones.</li>");
+ }
+ if(recs.length===0) recs.push("<li><strong>Next Step:</strong> The organization appears ready to move into detailed implementation planning, executive governance, conversion validation, and post-go-live support planning.</li>");
+ el.innerHTML=recs.join("");
+}
+
+function resetAll(){
+ sections.forEach((s,i)=>s.questions.forEach((_,j)=>document.getElementById(`q${i}_${j}`).checked=false));
+ moduleList.forEach((m,i)=>document.getElementById(`module${i}`).checked=false);
+ document.getElementById("org").value="";
+ document.getElementById("erp").selectedIndex=0;
+ document.getElementById("stage").selectedIndex=0;
+ document.getElementById("timeline").selectedIndex=0;
+ calculate();
+}
+
+buildChecklist();
+calculate();
+</script>
+</body>
+</html>
